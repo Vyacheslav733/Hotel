@@ -1,0 +1,79 @@
+﻿@using HotelContracts.ViewModels;
+@using HotelDataModels.Models;
+
+@{
+	ViewData["Title"] = "UpdateMealPlan";
+}
+
+<form method="post">
+	<div class="text-center">
+		<h2 class="display-4">Изменение плана питания</h2>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">План питания</label>
+		<select id="mealplan" name="mealplan" class="form-control" asp-items="@(new SelectList(@ViewBag.MealPlans, "Id", "MealPlanName"))"></select>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Название плана питания</label>
+		<input type="text"
+			   id="mealPlanName"
+			   placeholder="Введите название плана питания"
+			   name="mealPlanName"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Стоимость</label>
+		<input type="number"
+			   id="mealPlanPrice"
+			   placeholder="Введите стоимость плана питания"
+			   name="mealPlanPrice"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-2">Участники: </label>
+	</div>
+	<div class="form-group">
+		<div class="col-8">
+			<select name="memberselect" class="form-control" multiple size="6" id="memberselect">
+				@foreach (var member in ViewBag.Member)
+				{
+					<option value="@member.Id">@($"{member.MemberSurname} {member.MemberName} {member.MemberPatronymic}")</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="u-container-layout u-container-layout-2">
+		<input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+	</div>
+</form>
+
+
+@section Scripts
+{
+	<script>
+		function check() {
+			var mealPlan = $('#mealplan').val();
+			$("#memberselect option:selected").removeAttr("selected");
+			if (mealPlan) {
+				$.ajax({
+					method: "GET",
+					url: "/Home/GetMealPlan",
+					data: { mealPlanId: mealPlan },
+					success: function (result) {
+						console.log(result.item2);
+						$('#mealPlanName').val(result.item1.mealPlanName);
+						$('#mealPlanPrice').val(result.item1.mealPlanPrice);
+						$.map(result.item2, function (n) {
+							console.log("#" + n);
+							$("#" + n).attr("selected", "selected")
+						});
+					}
+				});
+			};
+		}
+		check();
+		$('#mealplan').on('change', function () {
+			check();
+		});
+	</script>
+}

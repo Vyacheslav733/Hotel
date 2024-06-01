@@ -1,0 +1,22 @@
+﻿﻿@{
+	ViewData["Title"] = "DeleteConference";
+}
+
+<form method="post">
+	<div class="text-center">
+		<h2 class="display-4">Удаление конференции</h2>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Конференция</label>
+		<select id="conference" name="conference" class="form-control">
+			@foreach (var conference in ViewBag.Conferences)
+			{
+				<option value="@conference.Id">@(conference.ConferenceName)</option>
+			}
+		</select>
+	</div>
+	<br>
+	<div class="u-container-layout u-container-layout-2">
+		<input type="submit" value="Удалить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+	</div>
+</form>

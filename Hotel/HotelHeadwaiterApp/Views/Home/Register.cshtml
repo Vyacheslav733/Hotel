@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+
+<form method="post">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px; border-color:black;">
+                        <div class="card-body p-5">
+                            <div class="text-center">
+                                <h2 class="u-text u-text-custom-color-1 u-text-default u-text-1"> Регистрация </h2>
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-1">Логин</label>
+                                <input type="text"
+                                        placeholder="Введите логин"
+                                        name="login"
+                                        class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-2">Электронная почта</label>
+                                <input type="email"
+                                        placeholder="Введите электронную почту"
+                                        name="email"
+                                        class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-3">Фамилия</label>
+                                <input type="text"
+                                        placeholder="Введите фамилию"
+                                        name="surname"
+                                        class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-4">Имя</label>
+                                <input type="text"
+                                        placeholder="Введите имя"
+                                        name="name"
+                                        class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-5">Отчество</label>
+                                <input type="text"
+                                        placeholder="Введите отчество"
+                                        name="patronymic"
+                                        class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-6">Номер телефона</label>
+                                <input type="text"
+                                       name="telephone"
+                                        class="form-control"
+                                        placeholder="Введите номер телефона" />
+                            </div>
+                            <div class="form-group">
+                                <label class="u-label u-text-custom-color-1 u-label-7">Пароль</label>
+                                <input type="password"
+                                        placeholder="Введите пароль"
+                                        name="password"
+                                        class="form-control" />
+                            </div>
+                            <br>
+                            <div class="form-group text-center d-flex justify-content-center">
+                                <button type="submit" class="btn btn-outline-dark text-center d-flex justify-content-md-center">Зарегистрироваться</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,86 @@
+﻿﻿@using HotelContracts.ViewModels;
+@using HotelDataModels.Models;
+
+@{
+	ViewData["Title"] = "UpdateRoom";
+}
+
+<form method="post">
+	<div class="text-center">
+		<h2 class="display-4">Изменение номера</h2>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Комнаты: </label>
+		<select id="room" name="room" class="form-control" asp-items="@(new SelectList(@ViewBag.Rooms, "Id", "RoomName"))"></select>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Название комнаты</label>
+		<input type="text"
+				id="roomName"
+				placeholder="Введите название номера"
+				name="roomName"
+				class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Корпус</label>
+		<input type="text"
+			   id="roomFrame"
+			   placeholder="Введите название корпуса"
+			   name="roomFrame"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-2">Цена комнаты</label>
+		<input type="number"
+				id="roomPrice"
+				placeholder="Введите цену номера"
+				name="roomPrice"
+				class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-2">Обеды</label>
+	</div>
+	<div class="form-group">
+		<div class="col-8">
+			<select name="lunches" class="form-control" multiple size="6" id="lunches">
+				@foreach (var lunch in ViewBag.Lunches)
+				{
+					<option value="@lunch.Id">@lunch.LunchName</option>
+				}
+			</select>
+		</div>
+	</div>
+	<br>
+	<div class="u-container-layout u-container-layout-2">
+		<input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+	</div>
+</form>
+
+@section Scripts
+{
+	<script>
+		function check() {
+			var room = $('#room').val();
+			if (room) {
+				$.ajax({
+					method: "GET",
+					url: "/Home/GetRoom",
+					data: { roomId: room },
+					success: function (result) {
+						$('#roomName').val(result.item1.roomName);
+						$('#roomPrice').val(result.item1.roomPrice);
+						$('#roomFrame').val(result.item1.roomFrame);
+						$.map(result.item2, function (n) {
+							console.log("#" + n);
+							$("#" + n).attr("selected", "selected")
+						});
+					}
+				});
+			};
+		}
+		check();
+		$('#room').on('change', function () {
+			check();
+		});
+	</script>
+}

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "DeleteRoom";
+}
+
+<form method="post">
+    <div class="text-center">
+        <h2 class="display-4">Удаление номера</h2>
+    </div>
+    <div class="form-group">
+        <label class="u-label u-text-custom-color-1 u-label-1">Комнаты: </label>
+        <select id="room" name="room" class="form-control" asp-items="@(new SelectList(@ViewBag.Rooms, "Id", "RoomName"))"></select>
+    </div>
+    <br>
+    <div class="u-container-layout u-container-layout-2">
+        <input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+    </div>
+</form>

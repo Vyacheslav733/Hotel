@@ -1,0 +1,85 @@
+﻿@using HotelContracts.ViewModels;
+@using HotelDataModels.Models;
+
+@{
+	ViewData["Title"] = "UpdateMember";
+}
+
+<form method="post">
+	<div class="text-center">
+		<h2 class="display-4">Изменение участника</h2>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Участник: </label>
+		<div class="u-input u-input-rectangle">
+			<select id="member" name="member" class="form-control">
+				@foreach (var member in ViewBag.Members)
+				{
+					<option value="@member.Id">@($"{member.MemberSurname} {member.MemberName} {member.MemberPatronymic}")</option>
+				}
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Фамилия участника</label>
+		<input type="text"
+			   id="memberSurname"
+			   placeholder="Введите фамилию участника"
+			   name="memberSurname"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Имя участника</label>
+		<input type="text"
+			   id="memberName"
+			   placeholder="Введите имя участника"
+			   name="memberName"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Отчество участника</label>
+		<input type="text"
+			   id="memberPatronymic"
+			   placeholder="Введите отчество участника"
+			   name="memberPatronymic"
+			   class="form-control" />
+	</div>
+	<div class="form-group">
+		<label class="u-label u-text-custom-color-1 u-label-1">Номер телефона участника</label>
+		<input type="text"
+			   id="memberPhoneNumber"
+			   placeholder="Введите номер телефона участника"
+			   name="memberPhoneNumber"
+			   class="form-control" />
+	</div>
+	<div class="u-container-layout u-container-layout-2">
+		<input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+	</div>
+</form>
+
+
+@section Scripts
+   {
+	<script>
+		function check() {
+			var member = $('#member').val();
+			if (member) {
+				$.ajax({
+					method: "GET",
+					url: "/Home/GetMember",
+					data: { memberId: member },
+					success: function (result) {
+						$('#memberSurname').val(result.memberSurname);
+						$('#memberName').val(result.memberName);
+						$('#memberPatronymic').val(result.memberPatronymic);
+						$('#memberPhoneNumber').val(result.memberPhoneNumber);
+					}
+				});
+			};
+		}
+		check();
+		$('#member').on('change', function () {
+			check();
+		});
+	</script>
+}

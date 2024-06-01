@@ -1,0 +1,70 @@
+﻿﻿@using HotelContracts.ViewModels;
+@using HotelDataModels.Models;
+
+@{
+    ViewData["Title"] = "UpdateConferenceBooking";
+}
+
+<form method="post">
+    <div class="text-center">
+        <h2 class="display-4">Обновление бронирования по конференции</h2>
+    </div>
+    <div class="form-group">
+        <label for="conferenceBooking">Бронирование:</label>
+        <select id="conferenceBooking" name="conferenceBooking" class="form-control" asp-items="@(new SelectList(@ViewBag.ConferenceBookings, "Id", "NameHall"))"></select>
+    </div>
+    <div class="form-group">
+        <label for="nameHall">Название зала:</label>
+        <input type="text" id="nameHall" name="nameHall" class="form-control" placeholder="Введите название зала">
+    </div>
+    <div class="form-group">
+        <label for="bookingDate">Дата:</label>
+        <input type="datetime-local" id="bookingDate" name="bookingDate" class="form-control" placeholder="Выберите начало конференции">
+    </div>
+    <div class="form-group">
+        <label class="u-label u-text-custom-color-1 u-label-2">Обеды</label>
+    </div>
+    <div class="form-group">
+        <div class="col-8">
+            <select name="lunches" class="form-control" multiple size="6" id="lunches">
+                @foreach (var lunch in ViewBag.Lunches)
+                {
+                    <option value="@lunch.Id">@lunch.LunchName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br>
+    <div class="u-container-layout u-container-layout-2">
+        <input type="submit" value="Добавить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+    </div>
+</form>
+
+@section Scripts
+{
+    <script>
+        function check() {
+            var conferenceBooking = $('#conferenceBooking').val();
+            if (conferenceBooking) {
+                $.ajax({
+                    method: "GET",
+                    url: "/Home/GetConferenceBooking",
+                    data: { conferencebookingId: conferenceBooking },
+                    success: function (result) {
+                        $('#nameHall').val(result.item1.nameHall);
+                        var bookingDate = new Date(result.item1.bookingDate).toISOString().slice(0, 16);
+                        $('#bookingDate').val(bookingDate);
+                        $.map(result.item2, function (n) {
+                            console.log("#" + n);
+                            $("#" + n).attr("selected", "selected")
+                        });
+                    }
+                });
+            };
+        }
+        check();
+        $('#conferenceBooking').on('change', function () {
+            check();
+        });
+    </script>
+}

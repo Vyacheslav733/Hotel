@@ -1,0 +1,22 @@
+﻿@using HotelContracts.ViewModels;
+
+@{
+	ViewData["Title"] = "ConferenceConferenceBookings";
+}
+
+<div class="text-center">
+	<h2 class="display-4">Связывание конференции и бронирования по конференции</h2>
+</div>
+<form method="post">
+	<div class="form-group">
+		<label for="conference">Конференция</label>
+		<select id="conference" name="conference" class="form-control" asp-items="@(new SelectList(@ViewBag.Conferences, "Id", "ConferenceName"))"></select>
+	</div>
+	<div class="form-group">
+		<label for="conferenceBooking">Помещение конференции</label>
+		<select id="conferenceBooking" name="conferenceBooking" class="form-control" asp-items="@(new SelectList(@ViewBag.ConferenceBookings, "Id", "NameHall"))"></select>
+	</div>
+	<div class="u-container-layout u-container-layout-2">
+		<input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+	</div>
+</form>

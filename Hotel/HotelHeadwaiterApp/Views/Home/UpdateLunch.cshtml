@@ -1,0 +1,62 @@
+﻿﻿@using HotelContracts.ViewModels;
+@using HotelDataModels.Models;
+
+@{
+    ViewData["Title"] = "UpdateLunch";
+}
+
+<form method="post">
+    <div class="text-center">
+        <h2 class="display-4">Изменение обеда</h2>
+    </div>
+    <div class="form-group">
+        <label class="u-label u-text-custom-color-1 u-label-1">Обеды: </label>
+        <select id="lunch" name="lunch" class="form-control" asp-items="@(new SelectList(@ViewBag.Lunches, "Id", "LunchName"))"></select>
+    </div>
+    <div class="form-group">
+        <label class="u-label u-text-custom-color-1 u-label-1">Название обеда</label>
+        <input type="text"
+               id="lunchName"
+               placeholder="Введите название обеда"
+               name="lunchName"
+               class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="u-label u-text-custom-color-1 u-label-2">Стоимость обеда</label>
+        <input type="number"
+               id="lunchPrice"
+               placeholder="Введите стоимость обеда"
+               name="lunchPrice"
+               class="form-control"
+               step="1" />
+    </div>
+    <br>
+    <div class="u-container-layout u-container-layout-2">
+        <input type="submit" value="Сохранить" class="btn btn-outline-dark text-center d-flex justify-content-md-center" />
+    </div>
+</form>
+
+
+@section Scripts
+{
+    <script>
+        function check() {
+            var lunch = $('#lunch').val();
+            if (lunch) {
+                $.ajax ({
+                    method: "GET",
+                    url: "/Home/GetLunch",
+                    data: { lunchId: lunch },
+                    success: function (result) {
+                        $('#lunchName').val(result.lunchName);
+                        $('#lunchPrice').val(result.lunchPrice);
+                    }
+                });
+            };
+        }
+        check(); 
+        $('#lunch').on('change', function () {
+            check();
+        });
+    </script>
+}
